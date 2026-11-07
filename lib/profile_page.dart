@@ -53,12 +53,8 @@ class ProfilePage extends StatelessWidget {
             child: ListView.builder(
               itemCount: pengalaman.length,
               itemBuilder: (context, index) {
-                return Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-                  child: ListTile(
-                    leading: const Icon(Icons.work, color: Colors.blue),
-                    title: Text(pengalaman[index]),
-                  ),
+                return ExperienceCard(
+                  title: pengalaman[index],
                 );
               },
             ),
@@ -142,6 +138,27 @@ class StatItem extends StatelessWidget {
         ),
         Text(label),
       ],
+    );
+  }
+}
+
+class ExperienceCard extends StatelessWidget {
+  final String title;
+
+  const ExperienceCard({
+    super.key,
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 2,
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+      child: ListTile(
+        leading: const Icon(Icons.work, color: Colors.blue),
+        title: Text(title),
+      ),
     );
   }
 }
