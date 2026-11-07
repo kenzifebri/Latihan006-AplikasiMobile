@@ -6,110 +6,27 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: const Text('User Profile'),
-        centerTitle: true,
-        backgroundColor: Colors.teal,
-        foregroundColor: Colors.white,
-        elevation: 2,
+        title: const Text('Profil'),
       ),
       body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(vertical: 24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const ProfileAvatar(),
-              const SizedBox(height: 16),
-              const ProfileInfo(
-                name: 'Kenzie Febri',
-                role: 'Mahasiswa Sistem Informasi',
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-                child: const Text('Edit Profil'),
-              ),
-              const SizedBox(height: 24),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 32),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      children: [
-                        Text(
-                          '12',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          'Proyek',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          '128',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          'Followers',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          '56',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          'Following',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const ProfileAvatar(),
+            const SizedBox(height: 10),
+            const ProfileInfo(
+              nama: 'Kenzie Febri',
+              role: 'Mahasiswa',
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text('Edit Profil'),
+            ),
+            const SizedBox(height: 15),
+            const ProfileStats(),
+          ],
         ),
       ),
     );
@@ -121,25 +38,20 @@ class ProfileAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(
-      radius: 55,
-      backgroundColor: Colors.teal.shade100,
-      child: const Icon(
-        Icons.person_rounded,
-        size: 60,
-        color: Colors.teal,
-      ),
+    return const CircleAvatar(
+      radius: 40,
+      child: Icon(Icons.person),
     );
   }
 }
 
 class ProfileInfo extends StatelessWidget {
-  final String name;
+  final String nama;
   final String role;
 
   const ProfileInfo({
     super.key,
-    required this.name,
+    required this.nama,
     required this.role,
   });
 
@@ -148,23 +60,50 @@ class ProfileInfo extends StatelessWidget {
     return Column(
       children: [
         Text(
-          name,
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
-            letterSpacing: 0.5,
-          ),
+          nama,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        const SizedBox(height: 6),
+        Text(role),
+      ],
+    );
+  }
+}
+
+class ProfileStats extends StatelessWidget {
+  const ProfileStats({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        StatItem(angka: '12', label: 'Proyek'),
+        StatItem(angka: '128', label: 'Followers'),
+        StatItem(angka: '56', label: 'Following'),
+      ],
+    );
+  }
+}
+
+class StatItem extends StatelessWidget {
+  final String angka;
+  final String label;
+
+  const StatItem({
+    super.key,
+    required this.angka,
+    required this.label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
         Text(
-          role,
-          style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-            color: Colors.teal.shade700,
-          ),
+          angka,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
+        Text(label),
       ],
     );
   }
