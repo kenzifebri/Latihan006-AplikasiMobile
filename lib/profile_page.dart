@@ -12,38 +12,91 @@ class _ProfilePageState extends State<ProfilePage> {
 
   final List<String> pengalaman = const [
     'Junior Flutter Developer - Freelance Project',
-    'Mobile Developer Intern - Startup Solusi Digital',
-    'Frontend Mobile Developer - Proyek Aplikasi Kampus',
-    'UI Designer & Mobile Enthusiast - Inovasi App',
+    'Mobile Developer Intern - PT Inovasi Solusi',
+    'Lead Frontend Mobile - Aplikasi Kampus',
+    'UI/UX & Flutter Enthusiast - Pengembangan Sistem',
   ];
+
+  void _showEditDialog() {
+    final TextEditingController controller = TextEditingController(text: userName);
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Edit Profil'),
+          content: TextFormField(
+            controller: controller,
+            decoration: const InputDecoration(
+              labelText: 'Nama Lengkap',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Batal'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  userName = controller.text;
+                });
+                Navigator.pop(context);
+              },
+              child: const Text('Simpan'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Profil Pengguna'),
+        centerTitle: true,
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
       body: Column(
         children: [
-          const SizedBox(height: 15),
+          const SizedBox(height: 20),
           const ProfileAvatar(),
           const SizedBox(height: 10),
           ProfileInfo(
             nama: userName,
             role: 'Mobile Developer & Mahasiswa',
           ),
-          const SizedBox(height: 10),
-          ElevatedButton(
-            onPressed: () {},
-            child: const Text('Edit Profil'),
+          const SizedBox(height: 12),
+          ElevatedButton.icon(
+            onPressed: _showEditDialog,
+            icon: const Icon(Icons.edit, size: 16),
+            label: const Text('Edit Profil'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue.shade50,
+              foregroundColor: Colors.blue,
+              elevation: 0,
+            ),
           ),
           const SizedBox(height: 15),
-          const ProfileStats(),
-          const SizedBox(height: 15),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            decoration: BoxDecoration(
+              color: Colors.blue.shade50,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: const ProfileStats(),
+          ),
+          const SizedBox(height: 20),
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -55,7 +108,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: 8),
           Expanded(
             child: ListView.builder(
               itemCount: pengalaman.length,
@@ -78,8 +131,13 @@ class ProfileAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CircleAvatar(
-      radius: 40,
-      child: Icon(Icons.person, size: 40),
+      radius: 45,
+      backgroundColor: Colors.grey,
+      child: Icon(
+        Icons.person,
+        size: 55,
+        color: Colors.white,
+      ),
     );
   }
 }
@@ -100,10 +158,20 @@ class ProfileInfo extends StatelessWidget {
       children: [
         Text(
           nama,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
         ),
-        const SizedBox(height: 2),
-        Text(role),
+        const SizedBox(height: 4),
+        Text(
+          role,
+          style: const TextStyle(
+            fontSize: 14,
+            color: Colors.grey,
+          ),
+        ),
       ],
     );
   }
@@ -141,9 +209,20 @@ class StatItem extends StatelessWidget {
       children: [
         Text(
           angka,
-          style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.blue,
+          ),
         ),
-        Text(label),
+        const SizedBox(height: 2),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 13,
+            color: Colors.grey,
+          ),
+        ),
       ],
     );
   }
@@ -159,12 +238,21 @@ class ExperienceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      decoration: BoxDecoration(
+        color: Colors.blue.shade50.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(8),
+      ),
       child: ListTile(
         leading: const Icon(Icons.work, color: Colors.blue),
-        title: Text(title),
+        title: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ),
     );
   }
